@@ -30,4 +30,10 @@ var (
 		Name:      "termination_duration_seconds",
 		Help:      "The time it took a single pod termination to finish",
 	})
+	// CandidatesQueryDurationSeconds is a histogram over the time it took to terminate pods.
+	CandidatesQueryDurationSeconds = promauto.NewHistogram(prometheus.HistogramOpts{
+		Namespace: "chaoskube",
+		Name:      "candidates_query_duration_seconds",
+		Help:      "The time it took to query for candidates",
+	})
 )

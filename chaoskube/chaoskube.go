@@ -201,6 +201,9 @@ func (c *Chaoskube) Victims() ([]v1.Pod, error) {
 // Candidates returns the list of pods that are available for termination.
 // It returns all pods that match the configured label, annotation and namespace selectors.
 func (c *Chaoskube) Candidates() ([]v1.Pod, error) {
+
+	start := time.Now()
+	defer metrics.CandidatesQueryDurationSeconds.Observe(time.Since(start).Seconds())
 	listOptions := metav1.ListOptions{LabelSelector: c.Labels.String()}
 
 	podList, err := c.Client.CoreV1().Pods(v1.NamespaceAll).List(listOptions)
